@@ -25,8 +25,7 @@ object ModuleTransformer {
 
   def fromRuleBodyTranformer(f: K => K, name: String): MemoizingModuleTransformer =
     fromSentenceTransformer(_ match {
-      case r: Rule => Rule.apply(f(r.body), f(r.requires), f(r.ensures), r.att)
-      case c: Context => Context.apply(f(c.body), f(c.requires), c.att)
+      case r: Rule => r.copy(body = f(r.body));
       case s => s
     }, name)
 
